@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     # Apps
     'drf_yasg',
     'product',
+    'discount',
 ]
 
 MIDDLEWARE = [
