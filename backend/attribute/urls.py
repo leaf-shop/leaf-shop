@@ -1,7 +1,10 @@
+from django.urls import path
 from rest_framework.routers import DefaultRouter
 from . import views
 
 route = DefaultRouter()
-route.register("attribute", views.AttributeViewSet)
+route.register("", views.AttributeViewSet)
 
-urlpatterns = route.urls
+urlpatterns = [
+    path("default/", views.DefaultAttributeViewSet.as_view()),
+] + route.urls
