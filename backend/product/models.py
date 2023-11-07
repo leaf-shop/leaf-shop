@@ -1,9 +1,12 @@
 from django.db import models
 from slugify import slugify
 from discount.models import Discount
-from attribute.models import Attribute
 
-# Create your models here.
+
+class Attribute(models.Model):
+    key = models.CharField(max_length=100)
+    value = models.CharField(max_length=100)
+    is_default = models.BooleanField(default=False, blank=True)
 
 class ProductGallery(models.Model):
     alt = models.CharField(max_length=50)
@@ -33,3 +36,4 @@ class Product(models.Model):
     class Meta:
         verbose_name = 'product'
         verbose_name_plural = 'products'
+

@@ -11,3 +11,9 @@ class ProductGallerySerializer(serializers.ModelSerializer):
     class Meta:
         model = models.ProductGallery
         fields = '__all__'
+
+
+class AttributeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Attribute
+        fields = "__all__"
