@@ -1,12 +1,14 @@
+from django.contrib.auth import get_user_model
+from discount.models import Discount
 from django.db import models
 from slugify import slugify
-from discount.models import Discount
 
 
 class Attribute(models.Model):
     key = models.CharField(max_length=100)
     value = models.CharField(max_length=100)
     is_default = models.BooleanField(default=False, blank=True)
+
 
 class ProductGallery(models.Model):
     alt = models.CharField(max_length=50)
@@ -15,8 +17,10 @@ class ProductGallery(models.Model):
 
 class Product(models.Model):
     title = models.CharField(max_length=50)
-    cover = models.ImageField(upload_to='images/product', null=True, blank=True)
-    gallery = models.ManyToManyField(ProductGallery, null=True, blank=True, related_name="productGallery")
+    cover = models.ImageField(
+        upload_to='images/product', null=True, blank=True)
+    gallery = models.ManyToManyField(
+        ProductGallery, null=True, blank=True, related_name="productGallery")
     description = models.TextField(db_index=True)
     price = models.FloatField()
     discount = models.ForeignKey(
@@ -37,3 +41,21 @@ class Product(models.Model):
         verbose_name = 'product'
         verbose_name_plural = 'products'
 
+
+class Comment(models.Model):
+    product = models.ForeignKey(
+        Product, on_delete=models.CASCADE, related_name="comments")
+    SCORES = (
+        ('1', 'Very Bad'),
+        ('2', 'Bad'),
+        ('3', 'Normal'),
+        ('4', 'Good'),
+        ('5', 'Great')
+    )
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    title = models.CharField(max_length=100)
+    descriptions = models.TextField()
+    score = models.CharField(max_length=1, choices=SCORES)
+    created_datetime = models.DateTimeField(auto_now_add=True)
+    demonstrable = models.BooleanField(default=True)
+    recommendable = models.BooleanField(default=True)
