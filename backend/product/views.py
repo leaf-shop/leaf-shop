@@ -12,6 +12,9 @@ class ProductGalleryViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.ProductGallerySerializer
 
 
+class CommentViewSet(viewsets.ModelViewSet):
+    queryset = models.Comment.objects.all()
+    serializer_class = serializers.CommentSerializer
 
 
 class AttributeViewSet(viewsets.ModelViewSet):
