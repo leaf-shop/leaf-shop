@@ -20,8 +20,8 @@ from . import swagger
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("/", include('discount.urls')),
-    path("/", include('product.urls')),
-    path("/", include('attribute.urls')),
+    path("discount/", include('discount.urls')),
+    path("product/", include('product.urls')),
+    path("attribute/", include('attribute.urls')),
     path('swagger/', swagger.schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 ]
