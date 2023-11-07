@@ -5,10 +5,15 @@ from attribute.models import Attribute
 
 # Create your models here.
 
+class ProductGallery(models.Model):
+    alt = models.CharField(max_length=50)
+    image = models.ImageField(upload_to='images/product')
+
 
 class Product(models.Model):
     title = models.CharField(max_length=50)
     cover = models.ImageField(upload_to='images/product', null=True, blank=True)
+    gallery = models.ManyToManyField(ProductGallery, null=True, blank=True, related_name="productGallery")
     description = models.TextField(db_index=True)
     price = models.FloatField()
     discount = models.ForeignKey(

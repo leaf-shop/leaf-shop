@@ -6,3 +6,8 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Product
         fields = '__all__'
+
+class ProductGallerySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.ProductGallery
+        fields = '__all__'
