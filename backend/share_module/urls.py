@@ -7,5 +7,6 @@ route = DefaultRouter()
 route.register("Category", views.CategoryViewSet)
 route.register("Comment", views.CommentViewSet)
 
-urlpatterns = route.urls
-
+urlpatterns = [
+    path("search/", views.SearchAPIView.as_view()),
+] + route.urls
