@@ -18,9 +18,3 @@ class AttributeSerializer(serializers.ModelSerializer):
         model = models.Attribute
         fields = "__all__"
 
-
-class CommentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.Comment
-        fields = '__all__'
-
