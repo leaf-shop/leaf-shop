@@ -1,4 +1,3 @@
-from django.contrib.auth import get_user_model
 from discount.models import Discount
 from share_module.models import Category
 from django.db import models
@@ -20,7 +19,7 @@ class Product(models.Model):
     title = models.CharField(max_length=50)
     cover = models.ImageField(
         upload_to='images/product', null=True, blank=True)
-    Category = models.ManyToManyField(Category, related_name="productCategory", null=True, blank=True)
+    category = models.ManyToManyField(Category, related_name="productCategory", null=True, blank=True)
     gallery = models.ManyToManyField(
         ProductGallery, null=True, blank=True, related_name="productGallery")
     description = models.TextField(db_index=True)
@@ -42,22 +41,3 @@ class Product(models.Model):
     class Meta:
         verbose_name = 'product'
         verbose_name_plural = 'products'
-
-
-class Comment(models.Model):
-    product = models.ForeignKey(
-        Product, on_delete=models.CASCADE, related_name="comments")
-    SCORES = (
-        ('1', 'Very Bad'),
-        ('2', 'Bad'),
-        ('3', 'Normal'),
-        ('4', 'Good'),
-        ('5', 'Great')
-    )
-    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
-    title = models.CharField(max_length=100)
-    descriptions = models.TextField()
-    score = models.CharField(max_length=1, choices=SCORES)
-    created_datetime = models.DateTimeField(auto_now_add=True)
-    demonstrable = models.BooleanField(default=True)
-    recommendable = models.BooleanField(default=True)
