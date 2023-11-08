@@ -10,7 +10,8 @@ route.register("attribute", views.AttributeViewSet)
 route.register("comments", views.CommentViewSet)
 
 urlpatterns = [
-    path("attribute/default/", views.DefaultAttributeViewSet.as_view()),
+    path("attribute/default/", views.DefaultAttributeAPIView.as_view()),
+    path("product/search/", views.SearchAPIView.as_view()),
 ] + route.urls
 
 
