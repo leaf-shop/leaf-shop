@@ -5,6 +5,7 @@ from . import views
 route = DefaultRouter()
 
 route.register("Category", views.CategoryViewSet)
+route.register("Comment", views.CommentViewSet)
 
 urlpatterns = route.urls
 
