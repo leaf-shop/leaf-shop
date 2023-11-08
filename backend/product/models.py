@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from discount.models import Discount
+from share_module.models import Category
 from django.db import models
 from slugify import slugify
 
@@ -19,6 +20,7 @@ class Product(models.Model):
     title = models.CharField(max_length=50)
     cover = models.ImageField(
         upload_to='images/product', null=True, blank=True)
+    Category = models.ManyToManyField(Category, related_name="productCategory", null=True, blank=True)
     gallery = models.ManyToManyField(
         ProductGallery, null=True, blank=True, related_name="productGallery")
     description = models.TextField(db_index=True)
