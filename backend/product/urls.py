@@ -10,7 +10,6 @@ route.register("attribute", views.AttributeViewSet)
 
 urlpatterns = [
     path("attribute/default/", views.DefaultAttributeAPIView.as_view()),
-    path("product/search/", views.SearchAPIView.as_view()),
 ] + route.urls
 
 
