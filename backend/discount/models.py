@@ -2,9 +2,11 @@ from django.db import models
 
 
 class Discount(models.Model):
+    DISCOUNT_TYPES_NUMBER = "n"
+    DISCOUNT_TYPES_PERCENT = "p"
     DISCOUNT_TYPES = (
-        ("n", "Number"),
-        ("p", "Percent")
+        (DISCOUNT_TYPES_NUMBER, "Number"),
+        (DISCOUNT_TYPES_PERCENT, "Percent")
     )
     title = models.CharField(max_length=100)
     value = models.PositiveIntegerField()
