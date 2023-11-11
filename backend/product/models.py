@@ -19,15 +19,15 @@ class Product(models.Model):
     title = models.CharField(max_length=50)
     cover = models.ImageField(
         upload_to='images/product', null=True, blank=True)
-    category = models.ManyToManyField(Category, related_name="productCategory", null=True, blank=True)
+    category = models.ManyToManyField(Category, blank=True, related_name="product_category")
     gallery = models.ManyToManyField(
-        ProductGallery, null=True, blank=True, related_name="productGallery")
+        ProductGallery,  blank=True, related_name="product_gallery")
     description = models.TextField(db_index=True)
     price = models.FloatField()
     discount = models.ForeignKey(
         Discount, on_delete=models.CASCADE, null=True, blank=True, related_name="products")
     attribute = models.ManyToManyField(
-        Attribute, null=True, blank=True, related_name="products")
+        Attribute, blank=True, related_name="products")
     count = models.IntegerField()
     slug = models.SlugField(null=False, db_index=True,
                             blank=True, max_length=200, unique=True)
