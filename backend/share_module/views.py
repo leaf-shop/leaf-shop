@@ -1,20 +1,27 @@
+from rest_framework.permissions import AllowAny, IsAdminUser
+from product import serializers as productSerializers
 from rest_framework import viewsets, generics, status
 from rest_framework.response import Response
 from rest_framework import viewsets
 from . import models, serializers
 from product.models import Product
-from product import serializers as productSerializers
 from django.db.models import Q
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = models.Category.objects.all()
-    serializer_class = serializers.CategorySerializer
+    serializer_class = serializers.CategorySerializer 
+
+    def get_permissions(self):
+        return [AllowAny()] if self.request.method == "GET" else [IsAdminUser()]
 
 
 class CommentViewSet(viewsets.ModelViewSet):
     queryset = models.Comment.objects.all()
     serializer_class = serializers.CommentSerializer
+
+    def get_permissions(self):
+        return [AllowAny()] if self.request.method == "GET" else [IsAdminUser()]
 
 
 class SearchAPIView(generics.RetrieveAPIView):
