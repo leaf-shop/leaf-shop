@@ -1,5 +1,5 @@
 from discount.models import Discount
-from share_module.models import Category
+from shared.models import Category
 from django.db import models
 from slugify import slugify
 

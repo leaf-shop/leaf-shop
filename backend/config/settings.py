@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'product',
     'discount',
-    'share_module',
+    'shared',
     'users',
 ]
 

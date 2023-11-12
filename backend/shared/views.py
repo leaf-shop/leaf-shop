@@ -25,9 +25,27 @@ class CommentViewSet(viewsets.ModelViewSet):
 
 
 class SearchAPIView(generics.RetrieveAPIView):
-    serializer_class = productSerializers.ProductSerializer
+    class QueryStringValue(enumerate):
+        OrderByDescending = '-created_datetime'
+        OrderByAscending = 'created_datetime'
+        BlogModel = "blog"
+        ProductModel = "product"
 
-    def get(self, request, *args, **kwargs):
+    # product_serializer_class = productSerializers.ProductSerializer
+    def get_serializer_class(self, model):
+        if model == self.QueryStringValue.ProductModel:
+            return productSerializers.ProductSerializer
+        elif model == self.QueryStringValue.BlogModel:
+            return blogSerializer.BlogSerializer
+        else:
+            return super().get_serializer_class()
+            
+                
+
+
+
+
+    def get(self, request, test=QueryStringValue.OrderByDescending, *args, **kwargs):
 
         search_for = request.GET.get("search_for")
         attributes = request.GET.get("attribute")
@@ -39,7 +57,7 @@ class SearchAPIView(generics.RetrieveAPIView):
         if search_model is None:
             return Response("Bad Request: enter 'model' for search ", status=status.HTTP_400_BAD_REQUEST)
 
-        elif search_model == "product":
+        elif search_model == self.QueryStringValue.ProductModel:
             model = Product
         else:
             #  model = Blog
@@ -56,12 +74,13 @@ class SearchAPIView(generics.RetrieveAPIView):
                     description__icontains=search_for)
 
             general_query = model.objects.filter(
-                search_for_query | attribute_query).all()
+                search_for_query | attribute_query
+                ).order_by('-created_datetime').all()
 
         except:
             return Response("Bad Request", status=status.HTTP_400_BAD_REQUEST)
 
-        serialized_data = self.serializer_class(general_query, many=True)
+        serialized_data = self.get_serializer_class(search_model)(general_query, many=True)
 
         if serialized_data.data == []:
             return Response("Not Fount", status=status.HTTP_404_NOT_FOUND)
