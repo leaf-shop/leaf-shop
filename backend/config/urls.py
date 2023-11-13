@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("discount/", include('discount.urls')),
     path("product/", include('product.urls')),
+    path("blog/", include('blog.urls')),
     path("share/", include('share_module.urls')),
     path('swagger/', swagger.schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 ]

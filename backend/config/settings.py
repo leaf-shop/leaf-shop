@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'drf_yasg',
     'product',
+    'blog',
     'discount',
     'share_module',
     'users',
