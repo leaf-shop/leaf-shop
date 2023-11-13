@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'product',
     'blog',
     'discount',
-    'share_module',
+    'shared',
     'users',
 ]
 
