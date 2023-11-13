@@ -1,5 +1,5 @@
 from discount.models import Discount
-from share_module.models import Category
+from shared.models import Category
 from django.db import models
 from slugify import slugify
 
@@ -32,6 +32,8 @@ class Product(models.Model):
     slug = models.SlugField(null=False, db_index=True,
                             blank=True, max_length=200, unique=True)
     is_active = models.BooleanField(default=False)
+    created_datetime = models.DateTimeField(auto_now_add=True)
+    updated_datetime = models.DateTimeField(auto_now=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:
