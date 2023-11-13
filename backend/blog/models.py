@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from slugify import slugify
-from share_module import models
+from share_module.models import Category
 
 # Create your models here.
 
@@ -9,7 +9,7 @@ class Blog(models.Model):
     title = models.CharField(max_length=50)
     cover = models.ImageField(upload_to='images/blog')
     text = models.TextField()
-    category = models.ManyToManyField(models.Category)
+    category = models.ManyToManyField(Category)
     author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     create_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(null=True,blank=True)
