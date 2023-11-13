@@ -19,7 +19,7 @@ from django.urls import path, include
 from . import swagger
 
 urlpatterns = [
-    path('api/admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
     path("api/discount/", include('discount.urls')),
     path("api/product/", include('product.urls')),
     path("api/shared/", include('shared.urls')),
