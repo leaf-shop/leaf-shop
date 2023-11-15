@@ -14,8 +14,8 @@ class Category(models.Model):
 class Comment(models.Model):
     product = models.ForeignKey("product.Product", null=True, blank=True,
         on_delete=models.CASCADE, related_name="comments")
-    # blog = models.ForeignKey("blog.Blog", null=True, blank=True,
-    #     on_delete=models.CASCADE, related_name="comments")
+    blog = models.ForeignKey("blog.Blog", null=True, blank=True,
+        on_delete=models.CASCADE, related_name="comments")
     SCORES = (
         ('1', 'Very Bad'),
         ('2', 'Bad'),
