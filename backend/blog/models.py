@@ -8,7 +8,7 @@ from shared.models import Category
 class Blog(models.Model):
     title = models.CharField(max_length=50)
     cover = models.ImageField(upload_to='images/blog')
-    text = models.TextField()
+    description = models.TextField()
     category = models.ManyToManyField(Category, blank=True)
     author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     created_datetime = models.DateTimeField(auto_now_add=True)
