@@ -1,4 +1,5 @@
 from rest_framework.permissions import AllowAny, IsAdminUser
+from rest_framework.pagination import PageNumberPagination
 from rest_framework import viewsets, generics, status
 from blog.models import Blog
 from product import serializers as productSerializers
@@ -29,7 +30,18 @@ class CommentViewSet(viewsets.ModelViewSet):
 class SearchAPIView(generics.RetrieveAPIView):
     """
     it returns a list of matching product or comment based on query
+    input querystrings :
+    -sort  {0,1} => default is 0 for descending and 1 for ascending
+    -model {'product', 'blog'}. This field is required 
+    -search_for  this is word for searching
+    -attribute  which is list IDs of required attributes
+
+    example query: 
+    http://127.0.0.1:8000/api/shared/search/?model=blog&search_for=somthing&sotr=1
+
     """
+    pagination_class = PageNumberPagination
+
     class SortFilterValues(enumerate):
         ORDER_BY_DESCENDING = '-created_datetime'
         ORDER_BY_ASCENDING = 'created_datetime'
@@ -86,14 +98,10 @@ class SearchAPIView(generics.RetrieveAPIView):
             general_query = model.objects.filter(
                 search_for_query | attribute_query).order_by(sorted_by).all()
 
-        except RuntimeError as e:
-            print(e)
+        except:
             return Response("Bad Request", status=status.HTTP_400_BAD_REQUEST)
 
+        page = self.paginate_queryset(general_query)
         serialized_data = self.get_serializer_class(
-            search_model)(general_query, many=True)
-
-        if serialized_data.data == []:
-            return Response("Not Fount", status=status.HTTP_404_NOT_FOUND)
-
-        return Response(serialized_data.data)
+            search_model)(page, many=True)
+        return self.get_paginated_response(serialized_data.data)
