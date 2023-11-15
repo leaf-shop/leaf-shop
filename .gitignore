@@ -161,3 +161,4 @@ cython_debug/
 
 .next
 node_modules
+media/
