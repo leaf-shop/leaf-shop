@@ -1,16 +1,18 @@
 from rest_framework.permissions import AllowAny, IsAdminUser
-from product import serializers as productSerializers
 from rest_framework import viewsets, generics, status
+from blog.models import Blog
+from product import serializers as productSerializers
+from blog import serializers as blogSerializer
 from rest_framework.response import Response
 from rest_framework import viewsets
-from . import models, serializers
 from product.models import Product
+from . import models, serializers
 from django.db.models import Q
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = models.Category.objects.all()
-    serializer_class = serializers.CategorySerializer 
+    serializer_class = serializers.CategorySerializer
 
     def get_permissions(self):
         return [AllowAny()] if self.request.method == "GET" else [IsAdminUser()]
@@ -25,28 +27,32 @@ class CommentViewSet(viewsets.ModelViewSet):
 
 
 class SearchAPIView(generics.RetrieveAPIView):
-    class QueryStringValue(enumerate):
-        OrderByDescending = '-created_datetime'
-        OrderByAscending = 'created_datetime'
-        BlogModel = "blog"
-        ProductModel = "product"
+    """
+    it returns a list of matching product or comment based on query
+    """
+    class SortFilterValues(enumerate):
+        ORDER_BY_DESCENDING = '-created_datetime'
+        ORDER_BY_ASCENDING = 'created_datetime'
 
-    # product_serializer_class = productSerializers.ProductSerializer
+    class SortQueryStringValues(enumerate):
+        DESCENDING = 0
+        ASCENDING = 1
+
+    class QueryModels(enumerate):
+        BLOG_MODEL = "blog"
+        PRODUCT_MODEL = "product"
+
     def get_serializer_class(self, model):
-        if model == self.QueryStringValue.ProductModel:
+        if model == self.QueryModels.PRODUCT_MODEL:
             return productSerializers.ProductSerializer
-        elif model == self.QueryStringValue.BlogModel:
+        elif model == self.QueryModels.BLOG_MODEL:
             return blogSerializer.BlogSerializer
         else:
             return super().get_serializer_class()
-            
-                
 
+    def get(self, request, *args, **kwargs):
 
-
-
-    def get(self, request, test=QueryStringValue.OrderByDescending, *args, **kwargs):
-
+        sort = request.GET.get("sort", self.SortQueryStringValues.DESCENDING)
         search_for = request.GET.get("search_for")
         attributes = request.GET.get("attribute")
         search_model = request.GET.get("model")
@@ -54,14 +60,18 @@ class SearchAPIView(generics.RetrieveAPIView):
         search_for_query = Q()
         model = None
 
-        if search_model is None:
+        if search_model == self.QueryModels.PRODUCT_MODEL:
+            model = Product
+        elif search_model == self.QueryModels.BLOG_MODEL:
+            model = Blog
+        else:
             return Response("Bad Request: enter 'model' for search ", status=status.HTTP_400_BAD_REQUEST)
 
-        elif search_model == self.QueryStringValue.ProductModel:
-            model = Product
+        if sort == self.SortQueryStringValues.DESCENDING:
+            sorted_by = self.SortFilterValues.ORDER_BY_DESCENDING
+
         else:
-            #  model = Blog
-            pass
+            sorted_by = self.SortFilterValues.ORDER_BY_ASCENDING
 
         try:
             if attributes:
@@ -74,13 +84,14 @@ class SearchAPIView(generics.RetrieveAPIView):
                     description__icontains=search_for)
 
             general_query = model.objects.filter(
-                search_for_query | attribute_query
-                ).order_by('-created_datetime').all()
+                search_for_query | attribute_query).order_by(sorted_by).all()
 
-        except:
+        except RuntimeError as e:
+            print(e)
             return Response("Bad Request", status=status.HTTP_400_BAD_REQUEST)
 
-        serialized_data = self.get_serializer_class(search_model)(general_query, many=True)
+        serialized_data = self.get_serializer_class(
+            search_model)(general_query, many=True)
 
         if serialized_data.data == []:
             return Response("Not Fount", status=status.HTTP_404_NOT_FOUND)

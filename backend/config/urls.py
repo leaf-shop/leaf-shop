@@ -19,9 +19,10 @@ from django.urls import path, include
 from . import swagger
 
 urlpatterns = [
-    path('api/admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
     path("api/discount/", include('discount.urls')),
     path("api/product/", include('product.urls')),
     path("api/shared/", include('shared.urls')),
+    path("api/blog/", include('blog.urls')),
     path('swagger/', swagger.schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 ]
