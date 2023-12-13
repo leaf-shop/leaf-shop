@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'discount',
     'shared',
     'users',
+    'support',
 ]
 
 MIDDLEWARE = [
