@@ -1,0 +1,86 @@
+.products {
+  height: 628px;
+  position: relative;
+  width: 1344px;
+}
+
+.products .group {
+  left: 0;
+  position: absolute;
+  width: 1344px;
+}
+
+.products .image {
+  height: 480px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 640px;
+}
+
+.products .image-2 {
+  left: 704px;
+  position: absolute;
+  width: 640px;
+}
+
+.products .frame-3 {
+  align-items: flex-start;
+  display: inline-flex;
+  gap: 74px;
+  left: 317px;
+  position: absolute;
+  top: 0;
+}
+
+.products .product-items-instance {
+  flex: 0 0 auto !important;
+}
+
+.products .property-1-8-variant-4 {
+  height: 481px;
+  top: 145px;
+}
+
+.products .property-1-8-default {
+  height: 482px;
+  top: 146px;
+}
+
+.products .property-1-8-variant-3 {
+  height: 481px;
+  top: 145px;
+}
+
+.products .property-1-8-variant-2 {
+  height: 481px;
+  top: 146px;
+}
+
+.products .group.property-1-8-variant-3 .image {
+  object-fit: cover;
+}
+
+.products .group.property-1-8-variant-2 .image {
+  object-fit: cover;
+}
+
+.products .group.property-1-8-variant-4 .image-2 {
+  height: 480px;
+  top: 1px;
+}
+
+.products .group.property-1-8-default .image-2 {
+  height: 482px;
+  top: 0;
+}
+
+.products .group.property-1-8-variant-3 .image-2 {
+  height: 480px;
+  top: 1px;
+}
+
+.products .group.property-1-8-variant-2 .image-2 {
+  height: 480px;
+  top: 1px;
+}
