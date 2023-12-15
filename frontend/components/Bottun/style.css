@@ -1,0 +1,39 @@
+.bottun {
+  align-items: center;
+  background-color: #1e3b73;
+  border-radius: 8px;
+  display: inline-flex;
+  gap: 10px;
+  justify-content: center;
+  padding: 16px 16px 16px 48px;
+  position: relative;
+}
+
+.bottun .text-wrapper {
+  color: var(--white);
+  direction: rtl;
+  font-family: var(--text-bold-font-family);
+  font-size: var(--text-bold-font-size);
+  font-style: var(--text-bold-font-style);
+  font-weight: var(--text-bold-font-weight);
+  letter-spacing: var(--text-bold-letter-spacing);
+  line-height: var(--text-bold-line-height);
+  margin-top: -1px;
+  position: relative;
+  width: fit-content;
+}
+
+.bottun .iconsax-linear {
+  height: 24px;
+  position: absolute;
+  top: 21px;
+  width: 24px;
+}
+
+.bottun .default {
+  left: 16px;
+}
+
+.bottun .variant-2 {
+  left: 8px;
+}

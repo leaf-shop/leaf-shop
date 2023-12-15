@@ -1,0 +1,36 @@
+.product-items {
+  align-items: flex-start;
+  display: inline-flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+}
+
+.product-items .text-wrapper-6 {
+  direction: rtl;
+  font-family: var(--subtitle1-medium-font-family);
+  font-size: var(--subtitle1-medium-font-size);
+  font-style: var(--subtitle1-medium-font-style);
+  font-weight: var(--subtitle1-medium-font-weight);
+  letter-spacing: var(--subtitle1-medium-letter-spacing);
+  line-height: var(--subtitle1-medium-line-height);
+  margin-top: -1px;
+  position: relative;
+  width: fit-content;
+}
+
+.product-items .line {
+  align-self: stretch;
+  height: 4px;
+  margin-bottom: -4px;
+  position: relative;
+  width: 100%;
+}
+
+.product-items .property-1-7-default {
+  color: #545454;
+}
+
+.product-items .property-1-7-variant-2 {
+  color: #1e3b73;
+}

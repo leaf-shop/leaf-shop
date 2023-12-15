@@ -1,0 +1,76 @@
+.card {
+  background-color: #ffffff;
+  border: 2.47px solid;
+  border-color: #bfb7f1;
+  border-radius: 19.72px;
+  height: 501px;
+  overflow: hidden;
+  position: relative;
+  width: 378px;
+}
+
+.card .frame-2 {
+  background-image: url(https://c.animaapp.com/VKfJiElF/img/rectangle-1-6@2x.png);
+  background-size: 100% 100%;
+  height: 270px;
+  left: 22px;
+  position: absolute;
+  top: 24px;
+  width: 333px;
+}
+
+.card .text-wrapper-2 {
+  color: #000000;
+  direction: rtl;
+  font-family: var(--text-medium-font-family);
+  font-size: var(--text-medium-font-size);
+  font-style: var(--text-medium-font-style);
+  font-weight: var(--text-medium-font-weight);
+  left: 105px;
+  letter-spacing: var(--text-medium-letter-spacing);
+  line-height: var(--text-medium-line-height);
+  position: absolute;
+  top: 308px;
+}
+
+.card .text-wrapper-3 {
+  color: #1e3b73;
+  direction: rtl;
+  font-family: var(--subtitle-medium-font-family);
+  font-size: var(--subtitle-medium-font-size);
+  font-style: var(--subtitle-medium-font-style);
+  font-weight: var(--subtitle-medium-font-weight);
+  left: 185px;
+  letter-spacing: var(--subtitle-medium-letter-spacing);
+  line-height: var(--subtitle-medium-line-height);
+  position: absolute;
+  top: 358px;
+}
+
+.card .button {
+  all: unset;
+  align-items: center;
+  background-color: #1e3b73;
+  border-radius: 8px;
+  box-sizing: border-box;
+  display: inline-flex;
+  gap: 10px;
+  justify-content: center;
+  left: 28px;
+  padding: 16px 72px;
+  position: absolute;
+  top: 415px;
+}
+
+.card .text-wrapper-4 {
+  color: var(--white);
+  direction: rtl;
+  font-family: "Samim-Bold", Helvetica;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: normal;
+  margin-top: -1px;
+  position: relative;
+  width: fit-content;
+}
