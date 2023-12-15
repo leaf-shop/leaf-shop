@@ -17,7 +17,7 @@ class TicketViewSet(viewsets.ModelViewSet):
         return serializers.TicketInputSerializer
 
     @action(detail=False, methods=['get'])
-    def tickets_by_assignee(self):
+    def tickets_by_assignee(self, request):
         assignee_id = self.request.GET.get("id")
         if not assignee_id:
             return Response(status=status.HTTP_400_BAD_REQUEST)
@@ -26,7 +26,7 @@ class TicketViewSet(viewsets.ModelViewSet):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     @action(detail=False, methods=['get'])
-    def tickets_by_creator(self):
+    def tickets_by_creator(self, request):
         creator_id = self.request.GET.get("id")
         if not creator_id:
             return Response(status=status.HTTP_400_BAD_REQUEST)
