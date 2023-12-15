@@ -28,5 +28,6 @@ urlpatterns = [
     path("api/blog/", include('blog.urls')),
     path('api/accounts/auth/', include('djoser.urls.authtoken')),
     path("api/accounts/", include('users.urls')),
+    path("api/orders/", include('orders.urls')),
     path('swagger/', swagger.schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 ]
