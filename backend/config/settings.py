@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'shared',
     'users',
     'support',
+    
 ]
 
 MIDDLEWARE = [
