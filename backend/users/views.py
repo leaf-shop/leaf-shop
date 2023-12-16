@@ -7,6 +7,7 @@ from . import models, serializers
 
 @method_decorator(csrf_exempt, name='dispatch')
 class CustomUserForAdminViewSet(viewsets.ModelViewSet):
+    
     queryset = models.CustomUser.objects.all()
     serializer_class = serializers.UserAdminSerializer
     permission_classes = [IsAuthenticated, IsAdminUser]
@@ -15,7 +16,6 @@ class CustomUserForAdminViewSet(viewsets.ModelViewSet):
 @method_decorator(csrf_exempt, name='dispatch')
 class CustomUserViewSet(viewsets.ModelViewSet):
     queryset = models.CustomUser.objects.all()
-    permission_classes = [IsAuthenticated]
 
     def get_serializer_class(self):
         return serializers.CustomUserOutputSerializer if self.request.method == "GET" else serializers.CustomUserInputSerializer
@@ -24,5 +24,5 @@ class CustomUserViewSet(viewsets.ModelViewSet):
         if self.request.method == "POST":
             return [AllowAny()]
         else:
-            return self.permission_classes
+            return [IsAuthenticated()]
     
