@@ -1,4 +1,5 @@
-from rest_framework import viewsets, response, status
+from rest_framework import viewsets, response, status, mixins, permissions
+from dj_rest_auth.jwt_auth import JWTCookieAuthentication
 from rest_framework.decorators import action
 from django.db.models import Q
 from . import serializers
@@ -6,32 +7,51 @@ from . import models
 
 
 class OrderViewSet(viewsets.ModelViewSet):
-    http_method_names = ['post', 'get', 'put', 'patch']
+
+    http_method_names = ['post', 'put', 'get', 'patch']
     queryset = models.Order.objects.all()
 
     def get_serializer_class(self):
         if self.request.method == "GET":
             return serializers.OrderOutputSerializer
         return serializers.OrderInputSerializer
+    
+    def get_permissions(self):
+        if self.request.method in  ["GET", "POST"]:
+            return [permissions.IsAuthenticated()]
+        return [permissions.IsAdminUser()]
 
-    @action(detail=False, methods=['get'])
-    def get_last_order(self, request, *args, **kwargs):
 
-        user_id = self.request.user.id
+    def get_last_order(self, request, user_id, *args, **kwargs):
+        """
+        Returns the last order created by the user whether is open or closed.
+        """
         if user_id is None:
             return response.Response(status=status.HTTP_401_UNAUTHORIZED)
         queryset = self.queryset.filter(
             user_id=user_id).order_by('-datetime_created').first()
-        if queryset is None:
-            return response.Response(status=status.HTTP_404_NOT_FOUND)
-
         serialized_data = self.get_serializer_class()(queryset).data
+        return response.Response(data=serialized_data, status=status.HTTP_200_OK)
+    
+    def get_user_all_orders(self, request, user_id, *args, **kwargs):
+        """
+        Returns all of user's orders
+        """
+        queryset = self.queryset.filter(
+            user_id=user_id).all()
+        serialized_data = self.get_serializer_class()(queryset, many=True).data
         return response.Response(data=serialized_data, status=status.HTTP_200_OK)
 
 
-class OrderItemViewSet(viewsets.ModelViewSet):
+class OrderItemViewSet(
+    mixins.RetrieveModelMixin, 
+    mixins.UpdateModelMixin, 
+    mixins.DestroyModelMixin,
+    viewsets.GenericViewSet):
+
     OUTPUT_SERIALIZER_CLASS = serializers.OrderItemOutputSerializer
     INPUT_SERIALIZER_CLASS = serializers.OrderItemInputSerializer
+
     queryset = models.OrderItem.objects.all()
 
     def get_serializer_class(self):
@@ -39,12 +59,10 @@ class OrderItemViewSet(viewsets.ModelViewSet):
             return self.OUTPUT_SERIALIZER_CLASS
         return self.INPUT_SERIALIZER_CLASS
 
-    @action(detail=False, methods=['post'])
-    def add_to_order(self, request, *args, **kwargs):
+    def add_to_order(self, request, user_id, *args, **kwargs):
 
-        user = self.request.user
         last_order, _ = models.Order.objects.get_or_create(
-            user_id=user.id,
+            user_id=user_id,
             status='u'
         )
 
