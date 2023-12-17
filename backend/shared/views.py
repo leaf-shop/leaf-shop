@@ -37,7 +37,11 @@ class SearchAPIView(generics.RetrieveAPIView):
     -attribute  which is list IDs of required attributes
 
     example query: 
-    http://127.0.0.1:8000/api/shared/search/?model=blog&search_for=somthing&sotr=1
+    http://127.0.0.1:8000/api/shared/search/blog/?search_for=somthing&sotr=1
+    or 
+    http://127.0.0.1:8000/api/shared/search/product/?search_for=somthing&sotr=1
+    or 
+    http://127.0.0.1:8000/api/shared/search/product/?attribute=1,2,3,,4
 
     """
     pagination_class = PageNumberPagination
@@ -62,12 +66,10 @@ class SearchAPIView(generics.RetrieveAPIView):
         else:
             return super().get_serializer_class()
 
-    def get(self, request, *args, **kwargs):
-
+    def get(self, request, search_model, *args, **kwargs):
         sort = request.GET.get("sort", self.SortQueryStringValues.DESCENDING)
         search_for = request.GET.get("search_for")
         attributes = request.GET.get("attribute")
-        search_model = request.GET.get("model")
         attribute_query = Q()
         search_for_query = Q()
         model = None
