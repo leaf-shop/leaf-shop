@@ -8,9 +8,7 @@ route.register("product", views.ProductViewSet)
 route.register("productgallery", views.ProductGalleryViewSet)
 route.register("attribute", views.AttributeViewSet)
 
-urlpatterns = [
-    path("attribute/default/", views.DefaultAttributeAPIView.as_view()),
-] + route.urls
+urlpatterns = route.urls
 
 
 

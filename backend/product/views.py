@@ -1,6 +1,7 @@
 from rest_framework.permissions import AllowAny, IsAdminUser
 from rest_framework import viewsets, generics, status
 from django.utils.decorators import method_decorator
+from rest_framework.decorators import action
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.response import Response
 from rest_framework import viewsets
@@ -24,6 +25,7 @@ class ProductGalleryViewSet(viewsets.ModelViewSet):
         return [AllowAny()] if self.request.method == "GET" else [IsAdminUser()]
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class AttributeViewSet(viewsets.ModelViewSet):
     queryset = models.Attribute.objects.all()
     serializer_class = serializers.AttributeSerializer
@@ -31,11 +33,8 @@ class AttributeViewSet(viewsets.ModelViewSet):
     def get_permissions(self):
         return [AllowAny()] if self.request.method == "GET" else [IsAdminUser()]
 
-
-class DefaultAttributeAPIView(generics.RetrieveAPIView):
-    serializer_class = serializers.AttributeSerializer
-
-    def get(self, request, **kwargs):
-        query = models.Attribute.objects.filter(is_default=True)
+    @action(detail=False, methods=["get"])
+    def default(self, request, **kwargs):
+        query =self.queryset.filter(is_default=True)
         serialized_data = self.serializer_class(query, many=True)
         return Response(serialized_data.data, status=status.HTTP_200_OK)
