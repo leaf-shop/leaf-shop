@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     # Apps
     'rest_framework',
     'rest_framework.authtoken',
-    'djoser',
+    'dj_rest_auth',
     'drf_yasg',
     'product',
     'blog',
@@ -143,4 +143,14 @@ AUTH_USER_MODEL = 'users.CustomUser'
 REST_FRAMEWORK = {
     'PAGE_SIZE': 12,
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
+    ],
+}
+
+
+REST_AUTH = {
+    'USE_JWT': True,
+    'JWT_AUTH_COOKIE': 'jwt-auth',
 }
