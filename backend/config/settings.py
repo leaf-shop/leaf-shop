@@ -146,6 +146,9 @@ REST_FRAMEWORK = {
 
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        # TODO: basic auth should be removed for production
+        'rest_framework.authentication.BasicAuthentication',
     ],
 }
 
