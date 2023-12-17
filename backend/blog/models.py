@@ -7,7 +7,7 @@ from shared.models import Category
 
 class Blog(models.Model):
     title = models.CharField(max_length=50)
-    cover = models.ImageField(upload_to='images/blog')
+    cover = models.ImageField(upload_to='images/blog', blank=True, null=True)
     description = models.TextField()
     category = models.ManyToManyField(Category, blank=True)
     author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
