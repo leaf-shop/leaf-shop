@@ -8,5 +8,5 @@ route.register("Category", views.CategoryViewSet)
 route.register("Comment", views.CommentViewSet)
 
 urlpatterns = [
-    path("search/", views.SearchAPIView.as_view()),
+    path("search/<str:search_model>/", views.SearchAPIView.as_view()),
 ] + route.urls
