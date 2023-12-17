@@ -23,8 +23,8 @@ class Comment(models.Model):
         ('4', 'Good'),
         ('5', 'Great')
     )
-    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
-    descriptions = models.TextField()
+    author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    description = models.TextField()
     score = models.CharField(max_length=1, choices=SCORES)
     created_datetime = models.DateTimeField(auto_now_add=True)
     demonstrable = models.BooleanField(default=True)
