@@ -25,7 +25,6 @@ class ProductGalleryViewSet(viewsets.ModelViewSet):
         return [AllowAny()] if self.request.method == "GET" else [IsAdminUser()]
 
 
-@method_decorator(csrf_exempt, name='dispatch')
 class AttributeViewSet(viewsets.ModelViewSet):
     queryset = models.Attribute.objects.all()
     serializer_class = serializers.AttributeSerializer
