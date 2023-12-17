@@ -26,6 +26,11 @@ class CommentViewSet(viewsets.ModelViewSet):
     def get_permissions(self):
         return [AllowAny()] if self.request.method == "GET" else [IsAdminUser()]
 
+    def get_by_user_id(self, request, user_id):
+        queryset = self.queryset.filter(author_id=user_id)
+        serialized_data = self.get_serializer_class()(queryset, many=True).data
+        return Response(serialized_data, status=status.HTTP_200_OK)
+
 
 class SearchAPIView(generics.RetrieveAPIView):
     """
