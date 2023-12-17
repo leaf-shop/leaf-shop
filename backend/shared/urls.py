@@ -4,9 +4,10 @@ from . import views
 
 route = DefaultRouter()
 
-route.register("Category", views.CategoryViewSet)
-route.register("Comment", views.CommentViewSet)
+route.register("category", views.CategoryViewSet)
+route.register("comment", views.CommentViewSet)
 
 urlpatterns = [
     path("search/<str:search_model>/", views.SearchAPIView.as_view()),
+    path("comment/<int:user_id>/", views.CommentViewSet.as_view({"get": "get_by_user_id"}))
 ] + route.urls
