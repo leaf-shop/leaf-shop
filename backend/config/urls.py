@@ -29,5 +29,6 @@ urlpatterns = [
     path('api/accounts/auth/', include('dj_rest_auth.urls')),
     path("api/accounts/", include('users.urls')),
     path("api/orders/", include('orders.urls')),
+    path("api/payment/", include('payment.urls')),
     path('swagger/', swagger.schema_view.with_ui('swagger',cache_timeout=0), name='schema-swagger-ui'),
 ]
