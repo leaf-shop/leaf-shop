@@ -14,8 +14,7 @@ class PaymentViewSet(viewsets.ViewSet):
     def get_last_order(self, user_id):
         return orders_models.Order.objects.filter(
             user_id=user_id,
-            status=orders_models.Order.STATUS_OPTIONS[2][0]).last()
-        
+            status=orders_models.Order.STATUS_OPTIONS[2][0]).last()      
 
     def calculate_price(self, request, user_id):
         order = self.get_last_order(user_id)
@@ -25,11 +24,13 @@ class PaymentViewSet(viewsets.ViewSet):
         
         serialized_order = orders_serializers.OrderOutputSerializer(order)
 
-        price = order.calculate_price()
+        price_with_discount = order.calculate_price_with_discount()  
+        price_without_discount = order.calculate_price()
 
         return response.Response(
             {
-                "total_price": price,
+                "price_without_discount": price_without_discount,
+                "price_with_discount": price_with_discount,
                 "order": serialized_order.data
             },
             status=status.HTTP_200_OK)
