@@ -25,7 +25,7 @@ class Product(models.Model):
     description = models.TextField(db_index=True)
     price = models.FloatField()
     discount = models.ForeignKey(
-        Discount, on_delete=models.CASCADE, null=True, blank=True, related_name="products")
+        Discount, on_delete=models.SET_NULL, null=True, blank=True, related_name="products")
     attribute = models.ManyToManyField(
         Attribute, blank=True, related_name="products")
     count = models.IntegerField()
