@@ -7,6 +7,6 @@ route.register("address", views.AddressViewSet)
 
 
 urlpatterns = [
-    path("calculate_price/<int:user_id>/", views.PaymentViewSet.as_view({"get":"calculate_price"}), name="calculate_price"),
+    path("calculate-price/<int:user_id>/", views.PaymentViewSet.as_view({"get":"calculate_price"}), name="calculate_price"),
     path("pay/<int:user_id>/", views.PaymentViewSet.as_view({"get": "pay"}), name="pay"),
 ]

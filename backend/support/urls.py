@@ -8,7 +8,7 @@ route.register("tickets/ticket", views.TicketViewSet)
 route.register("tickets/comments", views.CommentViewSet)
 
 urlpatterns = [
-    path("tickets/ticket/tickets_by_assignee/<int:assignee_id>/", views.TicketViewSet.as_view({"get": "tickets_by_assignee"})),
-    path("tickets/ticket/tickets_by_creator/<int:creator_id>/", views.TicketViewSet.as_view({"get": "tickets_by_creator"})),
-    path("tickets/comments/comments_by_creator/<int:creator_id>/", views.CommentViewSet.as_view({"get": "comments_by_creator"})),
+    path("tickets/ticket/tickets-by-assignee/<int:assignee_id>/", views.TicketViewSet.as_view({"get": "tickets_by_assignee"})),
+    path("tickets/ticket/tickets-by-creator/<int:creator_id>/", views.TicketViewSet.as_view({"get": "tickets_by_creator"})),
+    path("tickets/comments/comments-by-creator/<int:creator_id>/", views.CommentViewSet.as_view({"get": "comments_by_creator"})),
 ]+route.urls
