@@ -7,5 +7,7 @@ from users.models import CustomUser
 
 
 class Address(models.Model):
-    user = models.ForeignKey(CustomUser, related_name="addresses", on_delete=models.CASCADE)
-    address = models.CharField(max_length=255)
+    user = models.OneToOneField(CustomUser, related_name="addresses", on_delete=models.CASCADE, primary_key=True)
+    province = models.CharField(max_length=255)
+    city = models.CharField(max_length=255)
+    street = models.CharField(max_length=255)
