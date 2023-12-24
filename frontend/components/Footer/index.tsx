@@ -3,7 +3,7 @@ import React from 'react'
 function Footer() {
   return (
     <footer className="bg-white dark:bg-gray-900">
-      {/* <div className="mx-auto w-full p-4 py-6 lg:py-8">
+      <div className="mx-auto w-full p-4 py-6 lg:py-8">
         <div className="md:flex md:justify-between">
         <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
             <div>
@@ -84,7 +84,7 @@ function Footer() {
             </a>
           </div>
         </div>
-      </div> */}
+      </div>
     </footer>
   )
 }
