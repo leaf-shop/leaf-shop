@@ -31,7 +31,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body dir="rtl" className={inter.className +" "+ samim.className}>
         <Navbar />
-        <div className="h-[100vh] mt-[68px] p-5">{children}</div>
+        <div className="mt-[68px] p-5">{children}</div>
         <Footer />
       </body>
     </html>
