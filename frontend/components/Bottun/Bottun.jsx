@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { useReducer } from "react";
-import "./style.css";
 
 export const Bottun = ({
   property1,

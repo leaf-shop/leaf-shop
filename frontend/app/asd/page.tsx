@@ -171,7 +171,7 @@ export default function HomePage() {
           />
           <div className="text-wrapper-25">مشاهده همه</div>
         </div>
-        <div className="title-3">جدیدترین ها</div>
+        <div className="title-3">جدیدترین‌ها</div>
         <div className="about-us">
           <p className="text">
             لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون
