@@ -1,4 +1,4 @@
-from rest_framework.permissions import AllowAny, IsAdminUser
+from .permissions import IsAdminUserOrReadOnly
 from rest_framework.pagination import PageNumberPagination
 from rest_framework import viewsets, generics, status
 from blog.models import Blog
@@ -14,17 +14,13 @@ from django.db.models import Q
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = models.Category.objects.all()
     serializer_class = serializers.CategorySerializer
-
-    def get_permissions(self):
-        return [AllowAny()] if self.request.method == "GET" else [IsAdminUser()]
+    permission_classes = [IsAdminUserOrReadOnly]
 
 
 class CommentViewSet(viewsets.ModelViewSet):
     queryset = models.Comment.objects.all()
     serializer_class = serializers.CommentSerializer
-
-    def get_permissions(self):
-        return [AllowAny()] if self.request.method == "GET" else [IsAdminUser()]
+    permission_classes = [IsAdminUserOrReadOnly]
 
     def get_by_user_id(self, request, user_id):
         queryset = self.queryset.filter(author_id=user_id)

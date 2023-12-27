@@ -1,6 +1,5 @@
 from rest_framework import viewsets, response, status, mixins, permissions
-from dj_rest_auth.jwt_auth import JWTCookieAuthentication
-from rest_framework.decorators import action
+from shared.permissions import IsAdminUserOrReadOnly
 from django.db.models import Q
 from . import serializers
 from . import models

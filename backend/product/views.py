@@ -1,10 +1,11 @@
-from rest_framework.permissions import AllowAny, IsAdminUser
+from rest_framework.permissions import IsAdminUser
 from rest_framework import viewsets, status
 from django.utils.decorators import method_decorator
 from rest_framework.decorators import action
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.response import Response
 from rest_framework import viewsets
+from shared.permissions import IsAdminUserOrReadOnly
 from . import models, serializers
 
 
@@ -12,9 +13,14 @@ from . import models, serializers
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = models.Product.objects.all()
     serializer_class = serializers.ProductSerializer
-    permission_classes = [IsAdminUser]
+    permission_classes = [IsAdminUserOrReadOnly]
 
-
+    def get_permissions(self):
+        if self.action in ['apply_discount_category', 'remove_discount_category',
+                           'apply_discount_group', 'remove_discount_group']:
+            return [IsAdminUser()]
+        return super().get_permissions()
+    
     def apply_discount_category(self, request, category_id, discount_id):
         models.Product.objects.filter(
             category__in=[category_id]).all().update(discount=discount_id)
@@ -66,17 +72,13 @@ class ProductViewSet(viewsets.ModelViewSet):
 class ProductGalleryViewSet(viewsets.ModelViewSet):
     queryset = models.ProductGallery.objects.all()
     serializer_class = serializers.ProductGallerySerializer
-
-    def get_permissions(self):
-        return [AllowAny()] if self.request.method == "GET" else [IsAdminUser()]
+    permission_classes = [IsAdminUserOrReadOnly]
 
 
 class AttributeViewSet(viewsets.ModelViewSet):
     queryset = models.Attribute.objects.all()
     serializer_class = serializers.AttributeSerializer
-
-    def get_permissions(self):
-        return [AllowAny()] if self.request.method == "GET" else [IsAdminUser()]
+    permission_classes = [IsAdminUserOrReadOnly]
 
     @action(detail=False, methods=["get"])
     def default(self, request, **kwargs):
