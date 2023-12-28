@@ -1,0 +1,26 @@
+upstream django_server {
+        server 0.0.0.0:8000;
+}
+
+server {
+        listen 80;
+        server_name _;
+    
+
+        location / {
+                proxy_pass http://django_server;
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+        }
+
+        location /static/ {
+                alias /share/static/;
+                expires 30d;
+                add_header Cache-Control "public, max-age=2592000";      
+        }
+
+        location /media/ {
+                alias /share/media/;
+                
+        }
+}
