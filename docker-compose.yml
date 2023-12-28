@@ -1,0 +1,50 @@
+version: '3'
+services:
+  web:
+    container_name: leaf-shop-backend
+    image: leaf-shop-backend:v1
+    command: >
+      sh -c "
+      python manage.py migrate &&
+      gunicorn -c gunicorn_config.py config.wsgi:application"
+    # TODO: find a way to remove ports whitout breaking the execution
+    ports:
+      - 8000:8000
+    volumes:
+      - ./backend:/backend
+      - ./media:/media
+      - ./static:/static
+    depends_on:
+      - db
+    environment:
+      DJANGO_SECRET_KEY: ${DOCKER_COMPOSE_DJANGO_SECRET_KEY}
+      DJANGO_DEBUG: ${DOCKER_COMPOSE_DJANGO_DEBUG}
+      DJANGO_ALLOWED_HOSTS: ${DOCKER_COMPOSE_DJANGO_ALLOWED_HOSTS}
+      DJANGO_DB_HOST: ${DOCKER_COMPOSE_DJANGO_DB_HOST}
+      DJANGO_DB_PORT: ${DOCKER_COMPOSE_DJANGO_DB_PORT}
+      DJANGO_DB_NAME: ${DOCKER_COMPOSE_DJANGO_DB_NAME}
+      DJANGO_DB_USER: ${DOCKER_COMPOSE_DJANGO_DB_USER}
+      DJANGO_DB_PASSWORD: ${DOCKER_COMPOSE_DJANGO_DB_PASSWORD}
+      DJANGO_DEFAULT_THROTTLE_RATES_ANONYMOUS: ${DOCKER_COMPOSE_DJANGO_DEFAULT_THROTTLE_RATES_ANONYMOUS}
+      DJANGO_DEFAULT_THROTTLE_RATES_USER: ${DOCKER_COMPOSE_DJANGO_DEFAULT_THROTTLE_RATES_USER}
+  nginx:
+    container_name: leaf-shop-nginx
+    image: custom-nginx:v1
+    volumes:
+      - ./static:/share/static
+      - ./media:/share/media
+    ports:
+      - "80:80"
+  db:
+    container_name: leaf-shop-db
+    image: postgres:alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${DOCKER_COMPOSE_POSTGRES_DB}
+      POSTGRES_USER: ${DOCKER_COMPOSE_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${DOCKER_COMPOSE_POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+volumes:
+  postgres_data:
