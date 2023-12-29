@@ -1,4 +1,3 @@
 FROM nginx:alpine
-RUN mkdir /etc/nginx/sites-available
-COPY ./sites-available/default  /etc/nginx/sites-available/
+COPY ./  /etc/nginx/
 CMD ["nginx", "-g", "daemon off;"]
