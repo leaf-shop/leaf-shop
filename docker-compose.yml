@@ -1,15 +1,11 @@
 version: '3'
 services:
-  web:
-    container_name: leaf-shop-backend
+  backend:
     image: leaf-shop-backend:v1
     command: >
       sh -c "
       python manage.py migrate &&
       gunicorn -c gunicorn_config.py config.wsgi:application"
-    # TODO: find a way to remove ports whitout breaking the execution
-    ports:
-      - 8000:8000
     volumes:
       - ./backend:/backend
       - ./media:/media
@@ -29,7 +25,8 @@ services:
       DJANGO_DEFAULT_THROTTLE_RATES_USER: ${DOCKER_COMPOSE_DJANGO_DEFAULT_THROTTLE_RATES_USER}
   nginx:
     container_name: leaf-shop-nginx
-    image: custom-nginx:v1
+    image: leaf-shop-nginx:v1
+    # build: ./nginx
     volumes:
       - ./static:/share/static
       - ./media:/share/media
