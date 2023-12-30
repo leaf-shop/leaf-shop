@@ -25,6 +25,9 @@ env = Env()
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env("DJANGO_SECRET_KEY")
 
+SUPERUSER_USERNAME = env("DJANGO_SUPERUSER_USERNAME")
+SUPERUSER_PASSWORD = env("DJANGO_SUPERUSER_PASSWORD")
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool('DJANGO_DEBUG')
 
@@ -53,7 +56,6 @@ INSTALLED_APPS = [
     'support',
     'orders',
     'payment',
-    
 ]
 
 MIDDLEWARE = [
