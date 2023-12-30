@@ -1,8 +1,8 @@
 version: '3'
 services:
   backend:
-    image: leaf-shop-backend:v1
-    # build: backend
+    # image: leaf-shop-backend:v1
+    build: backend
     command: >
       gunicorn -c gunicorn_config.py config.wsgi:application
     volumes:
@@ -26,8 +26,8 @@ services:
       DJANGO_DEFAULT_THROTTLE_RATES_USER: ${DOCKER_COMPOSE_DJANGO_DEFAULT_THROTTLE_RATES_USER}
   nginx:
     container_name: leaf-shop-nginx
-    image: leaf-shop-nginx:v1
-    # build: ./nginx
+    # image: leaf-shop-nginx:v1
+    build: ./nginx
     volumes:
       - ./static:/share/static
       - ./media:/share/media
