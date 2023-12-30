@@ -1,12 +1,10 @@
 version: '3'
 services:
   backend:
-    # image: leaf-shop-backend:v1
-    build: backend
+    image: leaf-shop-backend:v1
+    # build: backend
     command: >
-      sh -c "
-      python manage.py migrate &&
-      gunicorn -c gunicorn_config.py config.wsgi:application"
+      gunicorn -c gunicorn_config.py config.wsgi:application
     volumes:
       - ./backend:/backend
       - ./media:/media
@@ -15,6 +13,8 @@ services:
       - db
     environment:
       DJANGO_SECRET_KEY: ${DOCKER_COMPOSE_DJANGO_SECRET_KEY}
+      DJANGO_SUPERUSER_USERNAME: ${DJANGO_SUPERUSER_USERNAME}
+      DJANGO_SUPERUSER_PASSWORD: ${DJANGO_SUPERUSER_PASSWORD}
       DJANGO_DEBUG: ${DOCKER_COMPOSE_DJANGO_DEBUG}
       DJANGO_ALLOWED_HOSTS: ${DOCKER_COMPOSE_DJANGO_ALLOWED_HOSTS}
       DJANGO_DB_HOST: ${DOCKER_COMPOSE_DJANGO_DB_HOST}
@@ -26,8 +26,8 @@ services:
       DJANGO_DEFAULT_THROTTLE_RATES_USER: ${DOCKER_COMPOSE_DJANGO_DEFAULT_THROTTLE_RATES_USER}
   nginx:
     container_name: leaf-shop-nginx
-    # image: leaf-shop-nginx:v1
-    build: ./nginx
+    image: leaf-shop-nginx:v1
+    # build: ./nginx
     volumes:
       - ./static:/share/static
       - ./media:/share/media
