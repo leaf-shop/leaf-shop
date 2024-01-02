@@ -6,4 +6,7 @@ route = DefaultRouter()
 
 route.register("blog", views.BlogViewSet)
 
-urlpatterns = route.urls
+urlpatterns = [
+    path("blog/blogs-number-by-created-time/<int:number>/",
+         views.BlogViewSet.as_view({"get": "get_number_of_blogs_by_created_time"}))
+] + route.urls
