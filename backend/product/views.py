@@ -67,7 +67,18 @@ class ProductViewSet(viewsets.ModelViewSet):
             product.save()
 
         return Response(status=status.HTTP_200_OK)
+    
+    def get_products_by_number(self, request, number):
 
+        if number < 1 :
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        
+        products = self.queryset.order_by("-created_datetime").all()[:number]
+
+        serialized_data = self.get_serializer_class()(products, many=True)
+        
+        return Response(serialized_data.data, status=status.HTTP_200_OK)
+ 
 
 class ProductGalleryViewSet(viewsets.ModelViewSet):
     queryset = models.ProductGallery.objects.all()

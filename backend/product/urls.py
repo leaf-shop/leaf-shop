@@ -17,4 +17,6 @@ urlpatterns = [
          views.ProductViewSet.as_view({"get": "apply_discount_group"})),
     path("admin/discount/remove/<str:products_list>/",
          views.ProductViewSet.as_view({"get": "remove_discount_group"})),
+    path("product/by-number/<int:number>/",
+         views.ProductViewSet.as_view({"get": "get_products_by_number"})),
 ] + route.urls
