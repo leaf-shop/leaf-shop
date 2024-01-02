@@ -40,6 +40,21 @@ class OrderViewSet(viewsets.ModelViewSet):
             user_id=user_id).all()
         serialized_data = self.get_serializer_class()(queryset, many=True).data
         return response.Response(data=serialized_data, status=status.HTTP_200_OK)
+    
+
+    def get_orders_by_number_status(self, request, state, number):
+
+        condition = (state not in ["p", "c", "u"]) or (number < 1)
+            
+        if condition:
+            return response.Response(status=status.HTTP_400_BAD_REQUEST)
+        
+        orders = self.queryset.filter(status=state).order_by("-datetime_created").all()[:number]
+
+        serialized_data = self.get_serializer_class()(orders, many=True)
+        
+        return response.Response(serialized_data.data, status=status.HTTP_200_OK)
+
 
 
 class OrderItemViewSet(
