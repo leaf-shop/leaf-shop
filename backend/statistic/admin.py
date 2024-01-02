@@ -1,3 +1,8 @@
 from django.contrib import admin
+from statistic import models
 
-# Register your models here.
+
+
+@admin.register(models.DailyRequestCount)
+class DailyRequestCountAdmin(admin.ModelAdmin):
+    pass
