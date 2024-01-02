@@ -15,4 +15,4 @@ class CustomUserInputSerializer(serializers.ModelSerializer):
 class CustomUserOutputSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.CustomUser
-        fields = ["email", "first_name", "last_name", "phone_number", "favorites"]
+        fields = ["username", "email", "first_name", "last_name", "phone_number", "favorites"]
