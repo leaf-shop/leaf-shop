@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'orders',
     'payment',
     'statistic',
+    'online_users',
 ]
 
 MIDDLEWARE = [
@@ -68,6 +69,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'statistic.middleware.RequestCounterMiddleware',
+    'online_users.middleware.OnlineNowMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'

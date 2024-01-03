@@ -5,6 +5,8 @@ from django.contrib.auth import get_user_model
 from statistic import models
 from support import models as support_models
 from django.utils.timezone import make_aware
+from online_users.models import OnlineUserActivity
+from datetime import timedelta
 from . import serializers
 
 
@@ -83,3 +85,13 @@ class RequestStatisticsAPIView(generics.GenericAPIView):
         requests = self.queryset.order_by("-date")
         serialized_data = self.serializer_class(requests, many=True)
         return response.Response(serialized_data.data, status=status.HTTP_200_OK)
+
+
+class OnlineUserAPIView(generics.GenericAPIView):
+    def get(self, request):
+        online_users_count = OnlineUserActivity.get_user_activities(time_delta=timedelta(minutes=2)).count()
+        return response.Response(
+            {
+                "count": online_users_count,
+            }, 
+            status=status.HTTP_200_OK)
